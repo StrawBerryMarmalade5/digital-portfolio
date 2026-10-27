@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MICHELLE S. AQUINO // Tactical Digital Portfolio & Dossier</title>
+  <meta name="description" content="Digital Portfolio & Tactical Dossier of Michelle S. Aquino - IT Student, Database Architect, Systems Analyst & Software Developer.">
+  
+  <!-- Google Fonts: Space Grotesk, Rajdhani & JetBrains Mono for High-Tech FPS Aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="ember">
+
+  <!-- Tactical HUD Background Grid & Scanlines -->
+  <div class="hud-canvas-container">
+    <canvas id="hudCanvas"></canvas>
+  </div>
+  <div class="blueprint-grid-overlay"></div>
+  <div class="vignette-overlay"></div>
+  <div class="scanlines"></div>
+
+  <!-- Tactical HUD Top Bar / Navigation -->
+  <header class="hud-header">
+    <div class="hud-nav-container">
+      <div class="hud-brand">
+        <a href="#dossier" class="brand-link" data-sfx="click">
+          <span class="brand-box">AQ</span>
+          <div class="brand-meta">
+            <span class="brand-name">M. AQUINO</span>
+            <span class="brand-tag">// IT-SPEC-248901</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="hud-status-chip">
+        <span class="pulse-dot"></span>
+        <span class="status-label">STATUS:</span>
+        <span class="status-val">AVAILABLE FOR OJT (480 HRS)</span>
+      </div>
+
+      <nav class="hud-nav" id="hudNav">
+        <ul class="nav-links">
+          <li><a href="#dossier" class="nav-link active" data-sfx="hover"><span class="nav-num">01</span> DOSSIER</a></li>
+          <li><a href="#loadout" class="nav-link" data-sfx="hover"><span class="nav-num">02</span> LOADOUT</a></li>
+          <li><a href="#operations" class="nav-link" data-sfx="hover"><span class="nav-num">03</span> MISSIONS</a></li>
+          <li><a href="#workflow" class="nav-link" data-sfx="hover"><span class="nav-num">04</span> PROTOCOL</a></li>
+          <li><a href="#records" class="nav-link" data-sfx="hover"><span class="nav-num">05</span> LOGS</a></li>
+          <li><a href="#comms" class="nav-link" data-sfx="hover"><span class="nav-num">06</span> COMMS</a></li>
+        </ul>
+      </nav>
+
+      <!-- Tactical Controls: Audio Toggle, Theme Selector, Terminal Button -->
+      <div class="hud-controls">
+        <button id="sfxToggle" class="hud-ctrl-btn" title="Toggle Tactical Audio (WebAudio SFX)" aria-label="Toggle Audio">
+          <svg class="icon-svg" viewBox="0 0 24 24" width="16" height="16">
+            <path id="sfxIconPath" fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+          <span class="ctrl-text">SFX: ON</span>
+        </button>
+
+        <div class="theme-dropdown">
+          <button id="themeBtn" class="hud-ctrl-btn theme-switch-btn" title="Cycle Tactical HUD Themes">
+            <span class="theme-color-preview"></span>
+            <span class="ctrl-text" id="themeName">EMBER</span>
+          </button>
+          <div class="theme-menu" id="themeMenu">
+            <button class="theme-opt active" data-theme="ember">
+              <span class="dot ember"></span> EMBER OP (VALORANT)
+            </button>
+            <button class="theme-opt" data-theme="blueprint">
+              <span class="dot blueprint"></span> BLUEPRINT TACTICAL
+            </button>
+            <button class="theme-opt" data-theme="cyber">
+              <span class="dot cyber"></span> ACID CYBERPUNK
+            </button>
+          </div>
+        </div>
+
+        <button id="terminalBtn" class="hud-ctrl-btn terminal-trigger" title="Launch Command Console">
+          <span class="terminal-symbol">&gt;_</span>
+          <span class="ctrl-text">CLI</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Open Navigation Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-content">
+
+    <!-- ==================== SECTION 01: HERO / AGENT DOSSIER ==================== -->
+    <section id="dossier" class="section hero-section">
+      <div class="section-corners top-corners">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+      </div>
+
+      <!-- Tactical Background HUD Wireframe Header -->
+      <div class="telemetry-bar">
+        <span class="tele-item"><span class="dim">SECTOR:</span> MARIKINA CITY // PH</span>
+        <span class="tele-item"><span class="dim">COORD:</span> 14.6507° N, 121.1029° E</span>
+        <span class="tele-item"><span class="dim">SYSTEM:</span> STI-IT-4TH-YEAR</span>
+        <span class="tele-item live-time"><span class="dim">ZULU:</span> <span id="zuluTime">--:--:-- UTC</span></span>
+      </div>
+
+      <div class="hero-grid">
+        <!-- Hero Left Column: Agent Credentials -->
+        <div class="hero-dossier-card">
+          <div class="card-badge-row">
+            <span class="tactical-badge primary"><span class="badge-icon">▲</span> AGENT DOSSIER</span>
+            <span class="tactical-badge accent">ID: AQUINO // 248901</span>
+            <span class="tactical-badge green">OJT READINESS: 100%</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="title-sub">CALLSIGN: ARCHITECT</span>
+            <span class="title-main">MICHELLE S. AQUINO</span>
+          </h1>
+
+          <div class="role-designation">
+            <div class="role-glitch" data-text="DATABASE ARCHITECT & SYSTEMS ANALYST">
+              DATABASE ARCHITECT &amp; SYSTEMS ANALYST
+            </div>
+            <div class="role-affiliation">
+              <span>STI COLLEGE – MARIKINA</span> // BS INFORMATION TECHNOLOGY ('27)
+            </div>
+          </div>
+
+          <p class="hero-briefing">
+            Fourth-year BSIT candidate engineered for high-integrity database schemas, enterprise systems analysis, and full-stack software development. Ready for immediate combat deployment in a <strong>480-Hour On-the-Job Training (OJT)</strong> internship starting <strong>Jan / Apr 2027</strong>.
+          </p>
+
+          <!-- Core Stat HUD Boxes (FPS Style K/D / Score / Armor / Ping) -->
+          <div class="tactical-stats-hud">
+            <div class="stat-hud-box">
+              <div class="stat-hud-label">TARGET DEPLOYMENT</div>
+              <div class="stat-hud-val highlighted">480<span class="unit">HRS</span></div>
+              <div class="stat-hud-sub">OJT INTERNSHIP</div>
+            </div>
+            <div class="stat-hud-box">
+              <div class="stat-hud-label">CORE DISCIPLINES</div>
+              <div class="stat-hud-val">03<span class="unit">ENGINES</span></div>
+              <div class="stat-hud-sub">DB / SA / DEV</div>
+            </div>
+            <div class="stat-hud-box">
+              <div class="stat-hud-label">DEPLOYED PROJECTS</div>
+              <div class="stat-hud-val">04<span class="unit">OPS</span></div>
+              <div class="stat-hud-sub">CAPSTONE &amp; CLIENTS</div>
+            </div>
+            <div class="stat-hud-box">
+              <div class="stat-hud-label">CREDENTIAL RATIO</div>
+              <div class="stat-hud-val">03<span class="unit">CERTS</span></div>
+              <div class="stat-hud-sub">COMPTIA / ORACLE / SAP</div>
+            </div>
+          </div>
+
+          <!-- Hero Action Buttons -->
+          <div class="hero-actions">
+            <a href="#operations" class="tactical-btn primary" data-sfx="equip">
+              <span class="btn-crosshair">✛</span>
+              <span class="btn-text">EXPLORE MISSIONS</span>
+              <span class="btn-corner"></span>
+            </a>
+            <a href="#comms" class="tactical-btn outline" data-sfx="click">
+              <span class="btn-icon">⚡</span>
+              <span class="btn-text">TRANSMIT COMMS</span>
+              <span class="btn-corner"></span>
+            </a>
+            <button class="tactical-btn ghost" id="printResumeBtn" data-sfx="click" title="Print or Save Official Resume Dossier">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+              </svg>
+              <span>RESUME DOSSIER</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Right Column: 3D Tactical Holo Card & Agent Profile -->
+        <div class="hero-tactical-display">
+          <div class="tactical-frame">
+            <div class="frame-tag top-tag">TACTICAL AGENT PROFILE // SPEC-OPS</div>
+            
+            <div class="holo-avatar-container">
+              <!-- Geometric Isometric Hologram Box -->
+              <div class="isometric-tech-box">
+                <div class="iso-cube">
+                  <div class="cube-face front">
+                    <span class="cube-code">SQL // NORMALIZED</span>
+                    <div class="circuit-nodes"></div>
+                  </div>
+                  <div class="cube-face back">
+                    <span class="cube-code">ERD // DFD L1</span>
+                  </div>
+                  <div class="cube-face right">
+                    <span class="cube-code">C# // JAVA // JS</span>
+                  </div>
+                  <div class="cube-face left">
+                    <span class="cube-code">FIGMA PROTOTYPE</span>
+                  </div>
+                  <div class="cube-face top">
+                    <div class="top-reticle"></div>
+                  </div>
+                  <div class="cube-face bottom"></div>
+                </div>
+              </div>
+
+              <!-- Reticle Target HUD overlay -->
+              <div class="reticle-hud">
+                <div class="reticle-ring"></div>
+                <div class="reticle-crosshair-h"></div>
+                <div class="reticle-crosshair-v"></div>
+                <div class="reticle-corner c1"></div>
+                <div class="reticle-corner c2"></div>
+                <div class="reticle-corner c3"></div>
+                <div class="reticle-corner c4"></div>
+                <div class="reticle-data">
+                  <span>TARGET: STI-IT701A</span>
+                  <span>STATUS: TARGET LOCKED</span>
+                  <span>CONFIDENCE: 99.8%</span>
+                </div>
+              </div>
+
+              <!-- Tactical Agent Signature / Badges -->
+              <div class="agent-signature-card">
+                <div class="sig-header">
+                  <span class="rank-indicator">RANK: SPECIALIST</span>
+                  <span class="security-clearance">CLEARANCE: LEVEL-4</span>
+                </div>
+                <div class="sig-body">
+                  <div class="sig-name">M. S. AQUINO</div>
+                  <div class="sig-title">DATABASE &amp; SYSTEMS ARCHITECT</div>
+                  <div class="sig-specs">
+                    <div class="spec-row">
+                      <span>SPECIALTY:</span>
+                      <strong class="accent-text">Schema Normalization &amp; Systems Flow</strong>
+                    </div>
+                    <div class="spec-row">
+                      <span>BASE LOCATION:</span>
+                      <strong>Marikina City, NCR, Philippines</strong>
+                    </div>
+                    <div class="spec-row">
+                      <span>CONTACT CHANNEL:</span>
+                      <code>msartilloaquino@gmail.com</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Telemetry -->
+            <div class="frame-tag bottom-tag">
+              <span>SECURITY HASH: 0x7E3A_STI_2026</span>
+              <span class="signal-bars">
+                <i class="bar active"></i><i class="bar active"></i><i class="bar active"></i><i class="bar active"></i><i class="bar"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-corners bottom-corners">
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 02: COMBAT LOADOUT (CORE TECHNICAL COMPETENCIES) ==================== -->
+    <section id="loadout" class="section loadout-section">
+      <div class="section-header-block">
+        <div class="section-num">02 // LOADOUT CONFIGURATION</div>
+        <h2 class="section-title">CORE TECHNICAL LOADOUT</h2>
+        <p class="section-subtitle">Tactical armament spanning database architecture, enterprise workflow systems analysis, and full-stack software development.</p>
+      </div>
+
+      <!-- Loadout Filter Tabs (FPS Weapon Slot Select) -->
+      <div class="loadout-tabs" role="tablist">
+        <button class="loadout-tab-btn active" data-filter="all" data-sfx="click">
+          <span class="tab-code">[SLOT 00]</span> ALL ARSENAL
+        </button>
+        <button class="loadout-tab-btn" data-filter="database" data-sfx="click">
+          <span class="tab-code">[SLOT 01]</span> DATABASE ENGINEERING
+        </button>
+        <button class="loadout-tab-btn" data-filter="systems" data-sfx="click">
+          <span class="tab-code">[SLOT 02]</span> SYSTEMS ANALYSIS &amp; UI/UX
+        </button>
+        <button class="loadout-tab-btn" data-filter="development" data-sfx="click">
+          <span class="tab-code">[SLOT 03]</span> SOFTWARE &amp; QA
+        </button>
+        <button class="loadout-tab-btn" data-filter="softskills" data-sfx="click">
+          <span class="tab-code">[SLOT 04]</span> COMBAT ATTRIBUTES
+        </button>
+      </div>
+
+      <!-- Loadout Arsenal Cards Grid -->
+      <div class="loadout-grid">
+        
+        <!-- CARD 01: DATABASE MANAGEMENT & ENGINEERING -->
+        <div class="loadout-card featured" data-category="database">
+          <div class="card-header">
+            <div class="slot-badge">PRIMARY WEAPON // SLOT 01</div>
+            <span class="tech-tier">TIER: ENTERPRISE</span>
+          </div>
+          <div class="card-title-group">
+            <div class="tech-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Database Management &amp; Engineering</h3>
+              <p class="card-desc">Relational architecture, query optimization &amp; zero-loss data integrity.</p>
+            </div>
+          </div>
+
+          <div class="tactical-metrics">
+            <div class="metric-row">
+              <div class="metric-label">
+                <span>Relational Modeling &amp; Normalization (1NF–3NF, BCNF)</span>
+                <span class="metric-val">96%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 96%"></div></div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-label">
+                <span>Parameterized SQL &amp; Stored Procedures (CRUD)</span>
+                <span class="metric-val">92%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 92%"></div></div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-label">
+                <span>ERD Structuring &amp; Migration Architectures</span>
+                <span class="metric-val">95%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 95%"></div></div>
+            </div>
+          </div>
+
+          <div class="arsenal-bullets">
+            <div class="bullet-item">
+              <span class="bullet-tag">CORE ARSENAL:</span>
+              <div class="tech-tags">
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">SQL Server</span>
+                <span class="tech-tag">DrawSQL</span>
+                <span class="tech-tag">Stored Procedures</span>
+                <span class="tech-tag">Relational ERD</span>
+                <span class="tech-tag">ACID Transactions</span>
+              </div>
+            </div>
+            <div class="bullet-item">
+              <span class="bullet-desc">
+                Architected normalized schemas for automated grievance tracking (Katarungang Pambarangay) and real-time biometric attendance audit logging.
+              </span>
+            </div>
+          </div>
+
+          <div class="card-footer-tactical">
+            <span>AUDIT INTEGRITY: VERIFIED</span>
+            <span class="corner-indicator">◲</span>
+          </div>
+        </div>
+
+        <!-- CARD 02: SYSTEMS ANALYSIS & UI/UX DESIGN -->
+        <div class="loadout-card featured" data-category="systems">
+          <div class="card-header">
+            <div class="slot-badge">SECONDARY WEAPON // SLOT 02</div>
+            <span class="tech-tier">TIER: STRATEGIC</span>
+          </div>
+          <div class="card-title-group">
+            <div class="tech-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Systems Analysis &amp; UI/UX Design</h3>
+              <p class="card-desc">Process modeling, procedural citizen workflows &amp; interactive Figma wireframes.</p>
+            </div>
+          </div>
+
+          <div class="tactical-metrics">
+            <div class="metric-row">
+              <div class="metric-label">
+                <span>DFD (Level-0/1) &amp; HIPO Hierarchy Architecture</span>
+                <span class="metric-val">94%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 94%"></div></div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-label">
+                <span>Figma UI/UX &amp; High-Fidelity Interactive Wireframing</span>
+                <span class="metric-val">90%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 90%"></div></div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-label">
+                <span>Workflow Modernization &amp; Citizen Portals</span>
+                <span class="metric-val">92%</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width: 92%"></div></div>
+            </div>
+          </div>
+
+          <div class="arsenal-bullets">
+            <div class="bullet-item">
+              <span class="bullet-tag">CORE ARSENAL:</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Figma</span>
+                <span class="tech-tag">DFD Level-0/1</span>
+                <span class="tech-tag">HIPO Charts</span>
+                <span class="tech-tag">System Flowcharts</span>
+                <span class="tech-tag">Design Systems</span>
+                <span class="tech-tag">User Journeys</span>
+              </div>
+            </div>
+            <div class="bullet-item">
+              <span class="bullet-desc">
+                Converted manual bureaucracy into streamlined digital dashboards for Barangay Tumana and DepEd SDO Marikina.
+              </span>
+            </div>
+          </div>
+
+          <div class="card-footer-tactical">
+            <span>BLUEPRINT ALIGNMENT: 100%</span>
+            <span class="corner-indicator">◲</span>
+          </div>
+        </div>
+
+        <!-- CARD 03: SOFTWARE DEVELOPMENT & QA -->
+        <div class="loadout-card" data-category="development">
+          <div class="card-header">
+            <div class="slot-badge">TACTICAL WEAPON // SLOT 03</div>
+            <span class="tech-tier">TIER: FULL-SPECTRUM</span>
+          </div>
+          <div class="card-title-group">
+            <div class="tech-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Software Development &amp; QA</h3>
+              <p class="card-desc">Desktop, Web, Mobile engineering with rigorous test script execution.</p>
+            </div>
+          </div>
+
+          <div class="arsenal-bullets">
+            <div class="bullet-item">
+              <span class="bullet-tag">LANGUAGES &amp; RUNTIMES:</span>
+              <div class="tech-tags">
+                <span class="tech-tag accent">Java</span>
+                <span class="tech-tag accent">C# / .NET</span>
+                <span class="tech-tag">Kotlin</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">PHP</span>
+                <span class="tech-tag">HTML5 / CSS3</span>
+              </div>
+            </div>
+            <div class="bullet-item">
+              <span class="bullet-tag">QUALITY ASSURANCE &amp; OPS:</span>
+              <div class="tech-tags">
+                <span class="tech-tag">Test Case Scripting</span>
+                <span class="tech-tag">Software Verification</span>
+                <span class="tech-tag">Git / GitHub</span>
+                <span class="tech-tag">Visual Studio</span>
+              </div>
+            </div>
+            <div class="bullet-item">
+              <span class="bullet-desc">
+                Built secure desktop apps with role-based access, audit logging, responsive web interfaces, and automated test validations.
+              </span>
+            </div>
+          </div>
+
+          <div class="card-footer-tactical">
+            <span>BUILD STABILITY: GREEN</span>
+            <span class="corner-indicator">◲</span>
+          </div>
+        </div>
+
+        <!-- CARD 04: COMBAT ATTRIBUTES (SOFT SKILLS & TEAM OPS) -->
+        <div class="loadout-card" data-category="softskills">
+          <div class="card-header">
+            <div class="slot-badge">PASSIVE PERKS // ATTRIBUTES</div>
+            <span class="tech-tier">TIER: MULTIPLIER</span>
+          </div>
+          <div class="card-title-group">
+            <div class="tech-icon-box">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="card-title">Combat Attributes &amp; Team Ops</h3>
+              <p class="card-desc">Operational efficiency, team synchrony &amp; high-precision documentation.</p>
+            </div>
+          </div>
+
+          <div class="perk-grid">
+            <div class="perk-box">
+              <div class="perk-icon">🎯</div>
+              <div class="perk-info">
+                <strong>Analytical QA Thinking</strong>
+                <span>Methodical edge-case discovery &amp; system testing.</span>
+              </div>
+            </div>
+            <div class="perk-box">
+              <div class="perk-icon">🤝</div>
+              <div class="perk-info">
+                <strong>Cross-Functional Collaboration</strong>
+                <span>Seamless sync across design, engineering &amp; stakeholders.</span>
+              </div>
+            </div>
+            <div class="perk-box">
+              <div class="perk-icon">📑</div>
+              <div class="perk-info">
+                <strong>Technical Documentation</strong>
+                <span>Clear ERD, DFD, HIPO, SOPs &amp; system manual drafting.</span>
+              </div>
+            </div>
+            <div class="perk-box">
+              <div class="perk-icon">⚡</div>
+              <div class="perk-info">
+                <strong>Rapid Adaptability</strong>
+                <span>Swift onboarding into novel enterprise stacks and environments.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer-tactical">
+            <span>TEAM SYNERGY: OPTIMAL</span>
+            <span class="corner-indicator">◲</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 03: FIELD OPERATIONS (PROJECT SHOWCASE) ==================== -->
+    <section id="operations" class="section operations-section">
+      <div class="section-header-block">
+        <div class="section-num">03 // FIELD OPERATIONS</div>
+        <h2 class="section-title">DEPLOYED MISSIONS &amp; PROJECTS</h2>
+        <p class="section-subtitle">Tactical project portfolio merging Oskar Kadera's structured cards with interactive mission intelligence briefings.</p>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="missions-grid">
+        
+        <!-- MISSION 01: AGAP (CAPSTONE) -->
+        <article class="mission-card flagship" data-mission="agap">
+          <div class="mission-card-media">
+            <div class="mission-badge-floating">
+              <span class="badge-dot pulse"></span> CAPSTONE RESEARCH // 2026
+            </div>
+            
+            <!-- Graphic Blueprint Mockup -->
+            <div class="mission-schematic-bg">
+              <div class="schematic-header">
+                <span class="code">SYS_ID: AGAP_TUMANA_v2.6</span>
+                <span class="status">OPERATIONAL</span>
+              </div>
+              <div class="schematic-body">
+                <div class="schematic-mockup agap-mockup">
+                  <div class="mockup-sidebar">
+                    <div class="mock-line short"></div>
+                    <div class="mock-line"></div>
+                    <div class="mock-line"></div>
+                    <div class="mock-line active"></div>
+                    <div class="mock-line"></div>
+                  </div>
+                  <div class="mockup-screen">
+                    <div class="mock-nav">
+                      <span class="mock-chip active">Blotter Registry</span>
+                      <span class="mock-chip">KP Conciliation</span>
+                      <span class="mock-chip">Audit Analytics</span>
+                    </div>
+                    <div class="mock-grid">
+                      <div class="mock-widget">
+                        <span class="widget-title">Active Cases</span>
+                        <div class="widget-num">142</div>
+                      </div>
+                      <div class="mock-widget">
+                        <span class="widget-title">Resolved</span>
+                        <div class="widget-num">89%</div>
+                      </div>
+                      <div class="mock-widget full">
+                        <div class="mock-table-row header"></div>
+                        <div class="mock-table-row"></div>
+                        <div class="mock-table-row"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="schematic-crosshairs">
+                <span class="ch-tl">+</span><span class="ch-tr">+</span>
+                <span class="ch-bl">+</span><span class="ch-br">+</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission-card-content">
+            <div class="mission-meta">
+              <span class="mission-code">OPERATION 01 // BRGY. TUMANA</span>
+              <span class="mission-date">2026 // COMPLETED</span>
+            </div>
+            
+            <h3 class="mission-title">Automated Grievance Assistance Platform (AGAP)</h3>
+            <div class="mission-role-tag">ROLE: LEAD SYSTEM &amp; DATABASE DESIGNER</div>
+            
+            <p class="mission-summary">
+              Engineered a comprehensive web-based dispute resolution, blotter monitoring, and Katarungang Pambarangay grievance management system for Barangay Tumana, Marikina City.
+            </p>
+
+            <div class="mission-highlights">
+              <div class="highlight-item">
+                <span class="h-icon">✔</span>
+                <span><strong>Normalized Database Schema:</strong> Structured multi-tier tables eliminating redundancy while ensuring strict citizen data privacy.</span>
+              </div>
+              <div class="highlight-item">
+                <span class="h-icon">✔</span>
+                <span><strong>DFD &amp; HIPO Architecture:</strong> Designed Level-0/1 Data Flow Diagrams mapping citizen walk-ins, mediation schedules, and official notices.</span>
+              </div>
+              <div class="highlight-item">
+                <span class="h-icon">✔</span>
+                <span><strong>High-Fidelity Figma Prototypes:</strong> Created an intuitive, accessible portal designed for both local officials and community citizens.</span>
+              </div>
+            </div>
+
+            <div class="mission-stack">
+              <span class="stack-chip">MySQL</span>
+              <span class="stack-chip">DrawSQL</span>
+              <span class="stack-chip">Figma</span>
+              <span class="stack-chip">Systems Analysis</span>
+              <span class="stack-chip">DFD / HIPO</span>
+              <span class="stack-chip">Web Architecture</span>
+            </div>
+
+            <div class="mission-actions">
+              <button class="tactical-btn primary mission-inspect-btn" data-mission-id="agap" data-sfx="click">
+                <span class="btn-crosshair">🔍</span>
+                <span>INSPECT DEPLOYMENT DATA</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- MISSION 02: ATTENDANCE MONITORING SYSTEM -->
+        <article class="mission-card" data-mission="attendance">
+          <div class="mission-card-media">
+            <div class="mission-badge-floating">
+              <span class="badge-dot pulse"></span> ADVANCED COURSEWORK // 2025
+            </div>
+            
+            <div class="mission-schematic-bg">
+              <div class="schematic-header">
+                <span class="code">SYS_ID: AMS_NET_SQL_v1.4</span>
+                <span class="status">DESKTOP // ACTIVE</span>
+              </div>
+              <div class="schematic-body">
+                <div class="schematic-mockup ams-mockup">
+                  <div class="ams-header-bar">
+                    <div class="ams-dot"></div><div class="ams-dot"></div><div class="ams-dot"></div>
+                    <span class="ams-win-title">AMS Login &amp; Audit Engine [C#/.NET]</span>
+                  </div>
+                  <div class="ams-body-grid">
+                    <div class="ams-card">
+                      <span class="ams-time">08:00:14 AM</span>
+                      <span class="ams-badge in">PUNCH IN: LOGGED</span>
+                    </div>
+                    <div class="ams-card">
+                      <span class="ams-time">AUTH STATUS</span>
+                      <span class="ams-badge auth">ROLE: ADMIN</span>
+                    </div>
+                    <div class="ams-log-stream">
+                      <code>&gt; [SQL_PROC] Exec sp_LogAttendance @UID=248901</code>
+                      <code>&gt; [AUDIT] Row lock acquired. Latency: 1.2ms</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission-card-content">
+            <div class="mission-meta">
+              <span class="mission-code">OPERATION 02 // STI MARIKINA</span>
+              <span class="mission-date">2025 // COMPLETED</span>
+            </div>
+
+            <h3 class="mission-title">Attendance Monitoring System</h3>
+            <div class="mission-role-tag">ROLE: DESKTOP &amp; DATABASE DEVELOPER</div>
+
+            <p class="mission-summary">
+              Desktop enterprise attendance logging application developed in C#/.NET and Visual Studio, tightly connected to a robust SQL Server transactional back-end.
+            </p>
+
+            <div class="mission-highlights">
+              <div class="highlight-item">
+                <span class="h-icon">✔</span>
+                <span><strong>Role-Based Security:</strong> Segregated operator and administrative privileges with encrypted credential verification.</span>
+              </div>
+              <div class="highlight-item">
+                <span class="h-icon">✔</span>
+                <span><strong>Audit Log Transactions:</strong> Parameterized SQL procedures to calculate time drifts, late deductions, and prevent manual tampering.</span>
+              </div>
+            </div>
+
+            <div class="mission-stack">
+              <span class="stack-chip">C# / .NET</span>
+              <span class="stack-chip">SQL Server</span>
+              <span class="stack-chip">Visual Studio</span>
+              <span class="stack-chip">Stored Procedures</span>
+              <span class="stack-chip">CRUD Architecture</span>
+            </div>
+
+            <div class="mission-actions">
+              <button class="tactical-btn primary mission-inspect-btn" data-mission-id="attendance" data-sfx="click">
+                <span class="btn-crosshair">🔍</span>
+                <span>INSPECT DEPLOYMENT DATA</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- MISSION 03: SWIFTSCHEDULE & BOOKFLOW MARIKINA -->
+        <article class="mission-card" data-mission="sdo">
+          <div class="mission-card-media">
+            <div class="mission-badge-floating">
+              <span class="badge-dot pulse"></span> WORK IMMERSION // 2023
+            </div>
+
+            <div class="mission-schematic-bg">
+              <div class="schematic-header">
+                <span class="code">SYS_ID: SDO_MARIKINA_SYSTEMS</span>
+                <span class="status">DEPLOYED CLIENT</span>
+              </div>
+              <div class="schematic-body">
+                <div class="schematic-mockup sdo-mockup">
+                  <div class="sdo-split">
+                    <div class="sdo-box">
+                      <div class="sdo-label">SWIFTSCHEDULE</div>
+                      <div class="sdo-icon">📅</div>
+                      <span class="sdo-sub">DepEd Appointment Engine</span>
+                    </div>
+                    <div class="sdo-divider"></div>
+                    <div class="sdo-box">
+                      <div class="sdo-label">BOOKFLOW</div>
+                      <div class="sdo-icon">📚</div>
+                      <span class="sdo-sub">Library Inventory System</span>
+                    </div>
+                  </div>
+                  <div class="sdo-flowline">
+                    <span>Flowchart Verification</span> &rarr; <span>CSS Layout</span> &rarr; <span>QA Pass</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mission-card-content">
+            <div class="mission-meta">
+              <span class="mission-code">OPERATION 03 // SDO MARIKINA</span>
+              <span class="mission-date">2023 // COMPLETED</span>
+            </div>
+
+            <h3 class="mission-title">SwiftSchedule &amp; BookFlow Marikina</h3>
+            <div class="mission-role-tag">ROLE: UI DESIGNER, DEVELOPER &amp; QA TESTER</div>
+
+            <p class="mission-summary">
+              Co-developed two mission-critical platforms for the Schools Division Office (SDO) of Marikina City: an Online Appointment System and a Library Inventory Platform.
+            </p>
+
+            <div class="mission-highlights">
+              <div class="highlight-item">
+                <span class="h-icon">✔</span>
+                <span><strong>Process Flowcharting:</strong> Mapped end-to-end booking queues and book circulation lifecycles.</span>
+              </div>
+              <div class="highlight-item">
+                <span class="h-icon">✔</span>
+                <span><strong>Responsive Layouts &amp; QA:</strong> Implemented responsive HTML5/CSS3 modules and executed thorough software validation scripts.</span>
+              </div>
+            </div>
+
+            <div class="mission-stack">
+              <span class="stack-chip">HTML5 / CSS3</span>
+              <span class="stack-chip">JavaScript</span>
+              <span class="stack-chip">PHP</span>
+              <span class="stack-chip">QA Testing</span>
+              <span class="stack-chip">Process Flowcharts</span>
+            </div>
+
+            <div class="mission-actions">
+              <button class="tactical-btn primary mission-inspect-btn" data-mission-id="sdo" data-sfx="click">
+                <span class="btn-crosshair">🔍</span>
+                <span>INSPECT DEPLOYMENT DATA</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 04: OPERATIONAL PROTOCOL (WORKFLOW) ==================== -->
+    <section id="workflow" class="section workflow-section">
+      <div class="section-header-block">
+        <div class="section-num">04 // EXECUTION PROTOCOL</div>
+        <h2 class="section-title">HOW I EXECUTE MISSIONS</h2>
+        <p class="section-subtitle">Bridging tactical analysis, clean visual prototyping, and zero-defect database implementation.</p>
+      </div>
+
+      <div class="protocol-timeline">
+        <!-- Step 01 -->
+        <div class="protocol-card">
+          <div class="protocol-num-badge">01</div>
+          <div class="protocol-header">
+            <span class="protocol-tag">STAGE 01</span>
+            <h3 class="protocol-title">RECON &amp; DISCOVERY</h3>
+          </div>
+          <p class="protocol-desc">
+            Deconstruct legacy manual workflows, formulate Level-0/1 Data Flow Diagrams (DFDs), map entity relationships, and gather strict organizational requirements.
+          </p>
+          <div class="protocol-deliverables">
+            <span>DELIVERABLES:</span> Requirements Spec, DFDs, HIPO Charts, Stakeholder Brief.
+          </div>
+        </div>
+
+        <div class="protocol-connector">
+          <span class="conn-line"></span>
+          <span class="conn-pulse"></span>
+        </div>
+
+        <!-- Step 02 -->
+        <div class="protocol-card">
+          <div class="protocol-num-badge">02</div>
+          <div class="protocol-header">
+            <span class="protocol-tag">STAGE 02</span>
+            <h3 class="protocol-title">ARCHITECTURE &amp; UX</h3>
+          </div>
+          <p class="protocol-desc">
+            Synthesize normalized relational schemas in MySQL/SQL Server (3NF) and build high-fidelity interactive wireframes in Figma to validate usability before writing code.
+          </p>
+          <div class="protocol-deliverables">
+            <span>DELIVERABLES:</span> DrawSQL Schema, Interactive Figma Wireframe, Data Dictionary.
+          </div>
+        </div>
+
+        <div class="protocol-connector">
+          <span class="conn-line"></span>
+          <span class="conn-pulse"></span>
+        </div>
+
+        <!-- Step 03 -->
+        <div class="protocol-card">
+          <div class="protocol-num-badge">03</div>
+          <div class="protocol-header">
+            <span class="protocol-tag">STAGE 03</span>
+            <h3 class="protocol-title">DEPLOY &amp; QA AUDIT</h3>
+          </div>
+          <p class="protocol-desc">
+            Implement robust code across C#/.NET, Java, or Web stacks, wire secure CRUD stored procedures, execute regression test scripts, and verify complete system stability.
+          </p>
+          <div class="protocol-deliverables">
+            <span>DELIVERABLES:</span> Production Codebase, QA Test Matrix, User Manuals.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 05: SERVICE RECORD & CERTIFICATIONS ==================== -->
+    <section id="records" class="section records-section">
+      <div class="section-header-block">
+        <div class="section-num">05 // SERVICE RECORD</div>
+        <h2 class="section-title">ACADEMIC &amp; COMBAT CREDENTIALS</h2>
+        <p class="section-subtitle">Formal education, verified industry certifications, and tactical organizational deployments.</p>
+      </div>
+
+      <div class="records-grid">
+        <!-- Education Dossier -->
+        <div class="record-box education-box">
+          <div class="record-box-header">
+            <div class="header-icon">🎓</div>
+            <div>
+              <h3 class="box-title">ACADEMIC PROFILE</h3>
+              <span class="box-sub">STI COLLEGE – MARIKINA</span>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-degree">
+              <span class="deg-title">Bachelor of Science in Information Technology</span>
+              <span class="deg-badge">4TH YEAR CANDIDATE</span>
+            </div>
+            <div class="edu-meta">
+              <span>ESTIMATED GRADUATION: <strong>2027</strong></span>
+              <span>CAMPUS: <strong>MARIKINA CITY, PH</strong></span>
+            </div>
+            
+            <div class="coursework-block">
+              <span class="block-title">SPECIALIZED COMBAT COURSEWORK:</span>
+              <div class="course-chips">
+                <span class="course-chip">Advanced Database Systems</span>
+                <span class="course-chip">Systems Analysis &amp; Design</span>
+                <span class="course-chip">Database Management</span>
+                <span class="course-chip">Web Development</span>
+                <span class="course-chip">Software Engineering</span>
+                <span class="course-chip">Object-Oriented Programming</span>
+              </div>
+            </div>
+
+            <div class="ojt-callout-banner">
+              <div class="ojt-icon">⚡</div>
+              <div class="ojt-text">
+                <strong>OJT INTERNSHIP TARGET</strong>
+                <p>Required Hours: <strong>480 Hours</strong> | Preferred Deployment: <strong>January 2027 / April 2027</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certifications & Training (Oskar Kadera Conferences & Events Table Style) -->
+        <div class="record-box certs-box">
+          <div class="record-box-header">
+            <div class="header-icon">🎖️</div>
+            <div>
+              <h3 class="box-title">VERIFIED CERTIFICATIONS &amp; SUMMITS</h3>
+              <span class="box-sub">OFFICIAL ACCREDITATIONS</span>
+            </div>
+          </div>
+
+          <div class="tactical-table">
+            <!-- Row 1: CompTIA -->
+            <div class="table-row">
+              <div class="col-year">2026</div>
+              <div class="col-badge">
+                <span class="cert-org-badge comptia">CompTIA</span>
+              </div>
+              <div class="col-desc">
+                <strong>Competency in Data Analysis Essentials</strong>
+                <span class="issuer">CompTIA Certification Body</span>
+              </div>
+              <div class="col-status">
+                <span class="status-pill verified">VERIFIED</span>
+              </div>
+            </div>
+
+            <!-- Row 2: Oracle -->
+            <div class="table-row">
+              <div class="col-year">2024</div>
+              <div class="col-badge">
+                <span class="cert-org-badge oracle">ORACLE</span>
+              </div>
+              <div class="col-desc">
+                <strong>Java Fundamentals</strong>
+                <span class="issuer">Oracle Academy</span>
+              </div>
+              <div class="col-status">
+                <span class="status-pill verified">VERIFIED</span>
+              </div>
+            </div>
+
+            <!-- Row 3: SAP & Accenture -->
+            <div class="table-row">
+              <div class="col-year">2025</div>
+              <div class="col-badge">
+                <span class="cert-org-badge sap">SAP &amp; ACN</span>
+              </div>
+              <div class="col-desc">
+                <strong>Student Career Summit Participant</strong>
+                <span class="issuer">SAP University Alliances &amp; Accenture</span>
+              </div>
+              <div class="col-status">
+                <span class="status-pill summit">SUMMIT</span>
+              </div>
+            </div>
+
+            <!-- Row 4: Organizational Sports Fest -->
+            <div class="table-row">
+              <div class="col-year">2025</div>
+              <div class="col-badge">
+                <span class="cert-org-badge sti">STI MARIKINA</span>
+              </div>
+              <div class="col-desc">
+                <strong>Committee Member &amp; Documentation Contributor</strong>
+                <span class="issuer">STI College Marikina Sports Fest (Dance Competitions)</span>
+              </div>
+              <div class="col-status">
+                <span class="status-pill guild">GUILD OP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION 06: COMMS / CONTACT ==================== -->
+    <section id="comms" class="section comms-section">
+      <div class="section-header-block">
+        <div class="section-num">06 // COMMS CENTER</div>
+        <h2 class="section-title">ESTABLISH SECURE COMMS</h2>
+        <p class="section-subtitle">Direct frequencies open for OJT internship proposals, technical discussions, and project inquiries.</p>
+      </div>
+
+      <div class="comms-grid">
+        <!-- Direct Frequencies -->
+        <div class="comms-channel-card">
+          <div class="channel-header">
+            <span class="tactical-badge primary">ACTIVE FREQUENCIES</span>
+            <span class="live-signal">SIGNAL: STRONG [100%]</span>
+          </div>
+
+          <div class="frequencies-list">
+            <!-- Email 1 -->
+            <div class="freq-item">
+              <div class="freq-icon">✉</div>
+              <div class="freq-details">
+                <span class="freq-label">PRIMARY COMMS EMAIL</span>
+                <a href="mailto:msartilloaquino@gmail.com" class="freq-value">msartilloaquino@gmail.com</a>
+              </div>
+              <button class="copy-pill-btn" data-copy="msartilloaquino@gmail.com" title="Copy Email">
+                <span>COPY</span>
+              </button>
+            </div>
+
+            <!-- Email 2 -->
+            <div class="freq-item">
+              <div class="freq-icon">🎓</div>
+              <div class="freq-details">
+                <span class="freq-label">INSTITUTIONAL EMAIL</span>
+                <a href="mailto:aquino.248901@marikina.sti.edu.ph" class="freq-value">aquino.248901@marikina.sti.edu.ph</a>
+              </div>
+              <button class="copy-pill-btn" data-copy="aquino.248901@marikina.sti.edu.ph" title="Copy Email">
+                <span>COPY</span>
+              </button>
+            </div>
+
+            <!-- Phone -->
+            <div class="freq-item">
+              <div class="freq-icon">📞</div>
+              <div class="freq-details">
+                <span class="freq-label">TACTICAL VOICE LINE (PH)</span>
+                <a href="tel:09475250849" class="freq-value">0947-525-0849</a>
+              </div>
+              <button class="copy-pill-btn" data-copy="09475250849" title="Copy Phone">
+                <span>COPY</span>
+              </button>
+            </div>
+
+            <!-- Sector Location -->
+            <div class="freq-item">
+              <div class="freq-icon">📍</div>
+              <div class="freq-details">
+                <span class="freq-label">BASE OF OPERATIONS</span>
+                <span class="freq-value">Marikina City, Metro Manila, Philippines</span>
+              </div>
+              <span class="base-badge">NCR SECTOR</span>
+            </div>
+          </div>
+
+          <!-- Quick Social Matrix Inspired by Image 1 & 3 Footer -->
+          <div class="social-matrix-block">
+            <span class="matrix-title">TRANSMIT VIA NETWORK NODES:</span>
+            <div class="social-buttons-row">
+              <a href="mailto:msartilloaquino@gmail.com" class="social-node-btn" title="Send Email" data-sfx="hover">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span>EMAIL</span>
+              </a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-node-btn" title="GitHub Profile" data-sfx="hover">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>GITHUB</span>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-node-btn" title="LinkedIn Profile" data-sfx="hover">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                <span>LINKEDIN</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tactical Contact Transmission Form -->
+        <div class="comms-form-card">
+          <div class="channel-header">
+            <span class="tactical-badge accent">ENCRYPTED DISPATCH</span>
+            <span class="packet-tag">PROTOCOL: TLS // SMTP</span>
+          </div>
+
+          <form id="contactForm" class="tactical-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="senderName" class="form-label">SENDER CALLSIGN / NAME *</label>
+                <div class="input-wrap">
+                  <span class="input-icon">👤</span>
+                  <input type="text" id="senderName" name="name" required placeholder="e.g. Recruit Lead / Director" class="tactical-input">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="senderEmail" class="form-label">RETURN FREQUENCY / EMAIL *</label>
+                <div class="input-wrap">
+                  <span class="input-icon">✉</span>
+                  <input type="email" id="senderEmail" name="email" required placeholder="recruiter@company.com" class="tactical-input">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="msgSubject" class="form-label">MISSION OBJECTIVE / SUBJECT *</label>
+              <div class="input-wrap">
+                <span class="input-icon">📌</span>
+                <input type="text" id="msgSubject" name="subject" required placeholder="OJT Internship Opportunity (480 Hours) / Database Analyst" class="tactical-input">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="msgBody" class="form-label">TRANSMISSION MESSAGE *</label>
+              <div class="input-wrap textarea-wrap">
+                <textarea id="msgBody" name="message" rows="5" required placeholder="Provide dispatch details, company background, and internship scope..." class="tactical-textarea"></textarea>
+              </div>
+            </div>
+
+            <div class="form-footer">
+              <button type="submit" class="tactical-btn primary full-width" data-sfx="equip">
+                <span class="btn-crosshair">✛</span>
+                <span class="btn-text">TRANSMIT PACKET NOW</span>
+                <span class="btn-corner"></span>
+              </button>
+              <div id="formFeedback" class="form-feedback"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== TACTICAL MODAL FOR MISSION INSPECTION ==================== -->
+  <div id="missionModal" class="tactical-modal-backdrop" aria-hidden="true" role="dialog">
+    <div class="tactical-modal-panel">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-badge">MISSION INTEL DOSSIER</span>
+          <h3 id="modalMissionTitle" class="modal-title">MISSION TITLE</h3>
+        </div>
+        <button id="modalCloseBtn" class="modal-close" aria-label="Close Intel Dossier" data-sfx="click">✕</button>
+      </div>
+
+      <div class="modal-body" id="modalMissionBody">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div class="modal-footer">
+        <span class="modal-crypto-tag">CLEARANCE VERIFIED // DECRYPT COMPLETE</span>
+        <button class="tactical-btn outline" id="modalDismissBtn" data-sfx="click">DISMISS DOSSIER</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TACTICAL INTERACTIVE TERMINAL (EASTER EGG & CLI) ==================== -->
+  <div id="terminalDrawer" class="terminal-drawer" aria-hidden="true">
+    <div class="terminal-header">
+      <div class="terminal-controls">
+        <span class="term-dot close" id="termCloseDot"></span>
+        <span class="term-dot min"></span>
+        <span class="term-dot max"></span>
+      </div>
+      <div class="terminal-title">AQ_TACTICAL_CLI // v2.6.4 (MARIKINA SECTOR)</div>
+      <div class="terminal-help-hint">Type <code>help</code> for commands</div>
+    </div>
+    <div class="terminal-output" id="terminalOutput">
+      <div class="term-line welcome">========================================================</div>
+      <div class="term-line welcome">AQUINO TACTICAL OS // COMMAND LINE INTERFACE</div>
+      <div class="term-line welcome">OPERATOR: Michelle S. Aquino (BSIT, 4th Year)</div>
+      <div class="term-line welcome">TYPE "help" FOR AVAILABLE OPERATIONAL DIRECTIVES.</div>
+      <div class="term-line welcome">========================================================</div>
+    </div>
+    <div class="terminal-input-row">
+      <span class="prompt-symbol">guest@aquino-hud:~$</span>
+      <input type="text" id="terminalInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="Enter command (e.g. help, skills, projects, contact)...">
+    </div>
+  </div>
+
+  <!-- Tactical HUD Footer -->
+  <footer class="hud-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="brand-box">AQ</span>
+        <div>
+          <span class="footer-title">MICHELLE S. AQUINO</span>
+          <span class="footer-sub">DATABASE ARCHITECT &amp; SYSTEMS ANALYST // BSIT '27</span>
+        </div>
+      </div>
+
+      <div class="footer-nav">
+        <a href="#dossier">DOSSIER</a>
+        <a href="#loadout">LOADOUT</a>
+        <a href="#operations">MISSIONS</a>
+        <a href="#workflow">PROTOCOL</a>
+        <a href="#records">SERVICE LOGS</a>
+        <a href="#comms">COMMS</a>
+      </div>
+
+      <div class="footer-copyright">
+        <span>© 2026 MICHELLE S. AQUINO. ALL RIGHTS RESERVED.</span>
+        <span class="footer-tag">EUTHENICS 2 // 03 ACTIVITY 1 PORTFOLIO</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Notification Toast for Copy / Form Alerts -->
+  <div id="hudToast" class="hud-toast" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
