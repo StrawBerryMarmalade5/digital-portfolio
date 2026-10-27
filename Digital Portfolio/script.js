@@ -537,6 +537,8 @@ document.addEventListener('DOMContentLoaded', () => {
             &nbsp;&nbsp;<b>projects</b>&nbsp;&nbsp;&nbsp;&nbsp;- Active deployments (AGAP, AMS, SDO)<br>
             &nbsp;&nbsp;<b>ojt</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Internship requirements &amp; timeline<br>
             &nbsp;&nbsp;<b>contact</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Direct frequencies and comms lines<br>
+            &nbsp;&nbsp;<b>github</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Open GitHub profile (@StrawBerryMarmalade5)<br>
+            &nbsp;&nbsp;<b>linkedin</b>&nbsp;&nbsp;&nbsp;&nbsp;- Open LinkedIn profile (@michelle-aquino-0671bb43b)<br>
             &nbsp;&nbsp;<b>theme [opt]</b>&nbsp;- Switch theme (ember, blueprint, cyber)<br>
             &nbsp;&nbsp;<b>clear</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Wipe terminal buffer<br>
             &nbsp;&nbsp;<b>exit</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Close CLI drawer
@@ -568,7 +570,17 @@ document.addEventListener('DOMContentLoaded', () => {
           break;
 
         case 'contact':
-          addTermLine(`EMAIL: msartilloaquino@gmail.com / aquino.248901@marikina.sti.edu.ph<br>PHONE: 0947-525-0849<br>SECTOR: Marikina City, Philippines`);
+          addTermLine(`EMAIL: msartilloaquino@gmail.com / aquino.248901@marikina.sti.edu.ph<br>GITHUB: https://github.com/StrawBerryMarmalade5<br>LINKEDIN: https://www.linkedin.com/in/michelle-aquino-0671bb43b/<br>PHONE: 0947-525-0849<br>SECTOR: Marikina City, Philippines`);
+          break;
+
+        case 'github':
+          addTermLine(`Opening GitHub profile: <a href="https://github.com/StrawBerryMarmalade5" target="_blank" rel="noopener noreferrer" style="color:var(--accent-primary);">https://github.com/StrawBerryMarmalade5</a>`);
+          window.open('https://github.com/StrawBerryMarmalade5', '_blank');
+          break;
+
+        case 'linkedin':
+          addTermLine(`Opening LinkedIn profile: <a href="https://www.linkedin.com/in/michelle-aquino-0671bb43b/" target="_blank" rel="noopener noreferrer" style="color:var(--accent-primary);">https://www.linkedin.com/in/michelle-aquino-0671bb43b/</a>`);
+          window.open('https://www.linkedin.com/in/michelle-aquino-0671bb43b/', '_blank');
           break;
 
         case 'theme':
